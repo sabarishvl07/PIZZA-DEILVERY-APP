@@ -9,12 +9,14 @@ const connectDB = require('./config/db');
 const app = express();
 const server = http.createServer(app);
 
-// Allow any localhost origin in development
+// Allow localhost or matches FRONTEND_URL or any vercel.app subdomain
 const corsOrigin = (origin, callback) => {
-  // Allow requests with no origin (mobile apps, curl, etc.)
   if (!origin) return callback(null, true);
-  // Allow any localhost port
-  if (origin.startsWith('http://localhost') || origin === process.env.FRONTEND_URL) {
+  if (
+    origin.startsWith('http://localhost') || 
+    origin === process.env.FRONTEND_URL || 
+    origin.endsWith('.vercel.app')
+  ) {
     return callback(null, true);
   }
   callback(new Error('Not allowed by CORS'));

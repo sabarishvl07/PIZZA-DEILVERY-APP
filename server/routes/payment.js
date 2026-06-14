@@ -6,9 +6,12 @@ const { protect } = require('../middleware/authMiddleware');
 
 // Initialize Razorpay instance
 // In test mode, it works with keys starting with rzp_test_
+console.log('Razorpay Init - Key ID:', process.env.RAZORPAY_KEY_ID ? `${process.env.RAZORPAY_KEY_ID.trim().substring(0, 12)}... [length: ${process.env.RAZORPAY_KEY_ID.length}]` : 'undefined');
+console.log('Razorpay Init - Key Secret:', process.env.RAZORPAY_KEY_SECRET ? `...${process.env.RAZORPAY_KEY_SECRET.trim().slice(-4)} [length: ${process.env.RAZORPAY_KEY_SECRET.length}]` : 'undefined');
+
 const razorpayInstance = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET
+  key_id: process.env.RAZORPAY_KEY_ID ? process.env.RAZORPAY_KEY_ID.trim() : undefined,
+  key_secret: process.env.RAZORPAY_KEY_SECRET ? process.env.RAZORPAY_KEY_SECRET.trim() : undefined
 });
 
 // @desc    Create a payment order with Razorpay

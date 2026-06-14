@@ -48,8 +48,12 @@ const Checkout = () => {
 
       // 3. Configure Razorpay checkout options
       // Note: We use a fallback test key if not defined on client
+      const rawKey = import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_T0oqNdrzcSdAr8';
+      const trimmedKey = rawKey.trim();
+      console.log('Frontend Razorpay Key used:', trimmedKey.substring(0, 12) + '...', '[length:', trimmedKey.length, ']');
+
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_T0oqNdrzcSdAr8',
+        key: trimmedKey,
         amount: orderData.amount,
         currency: orderData.currency,
         name: 'PizzaCraft Store',
